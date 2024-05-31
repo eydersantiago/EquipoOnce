@@ -2,4 +2,22 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph" />
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragment_login">
+<fragment
+android:id="@+id/fragment_login"
+android:name="com.uv.routinesappuv.view.fragment.LoginRoutineFragment"
+android:label="fragment_login"
+tools:layout="@layout/fragment_login_routine">
+<action
+    android:id="@+id/action_logged_in"
+    app:destination="@id/fragment_admin_rutinas" />
+</fragment>
+    <fragment
+        android:id="@+id/fragment_admin_rutinas"
+        android:name="com.uv.routinesappuv.view.fragment.HomeRoutineFragment"
+        android:label="AdminRutinas"
+        tools:layout="@layout/fragment_home_routine">
+    </fragment>
+
+    </navigation>
