@@ -28,7 +28,7 @@ class LoginRoutineFragment : Fragment() {
     }
     private fun controladores() {
         binding.btnSubmit.setOnClickListener {
-            findNavController().navigate(R.id.fragment_admin_rutinas)
+            findNavController().navigate(R.id.fragment_home_routine)
         }
     }
 }
