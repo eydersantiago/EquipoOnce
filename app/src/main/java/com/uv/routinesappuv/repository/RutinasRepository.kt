@@ -11,24 +11,17 @@ class RutinasRepository {
     val getListLiveData: MutableLiveData<List<Rutina>> by lazy {
         MutableLiveData<List<Rutina>>()
     }
-    fun getRutinas() {
+  fun getRutinas() {
         val docRef = db.collection("rutina")
-        docRef.get().addOnSuccessListener {
-            val rutinas = ArrayList<Rutina>()
-            for (item in it.documents) {
-                val id = "9"
-                val nombre = item.data!!["nombre_rutina"] as String
-                val descripcion = item.data!!["descripcion_rutina"] as String
-
-                val rutina = Rutina(id, nombre, descripcion)
-                rutinas.add(rutina)
+        docRef.get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d("Firestore", "${document.id} => ${document.data}")
+                }
             }
-
-            getListLiveData.postValue(rutinas)
-        }.addOnFailureListener {
-            Log.d("get", it.localizedMessage!!)
-            getListLiveData.postValue(null)
-        }
+            .addOnFailureListener { exception ->
+                Log.w("Firestore", "Error getting documents: ", exception)
+            }
     }
 
 
