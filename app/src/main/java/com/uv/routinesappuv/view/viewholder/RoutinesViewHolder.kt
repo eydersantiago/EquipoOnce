@@ -14,5 +14,28 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import com.uv.routinesappuv.databinding.ItemRutinaBinding
+import com.uv.routinesappuv.model.Rutina
 
-class RoutinesViewHolder()
+class RoutinesViewHolder(binding: ItemRutinaBinding, navController: NavController):
+    RecyclerView.ViewHolder(binding.root) {
+    val bindingItem = binding
+    val navController = navController
+
+    fun setItemCita(rutina: Rutina) {
+
+
+        bindingItem.tvNombreRutina.text = rutina.nombre_rutina
+        bindingItem.tvDescripcion.text = "${rutina.descripcion_rutina}"
+
+        bindingItem.cvRutina.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putSerializable("clave", rutina)
+            navController.navigate(
+                R.id.action_add_routine, bundle
+            )
+        }
+    }
+
+
+}

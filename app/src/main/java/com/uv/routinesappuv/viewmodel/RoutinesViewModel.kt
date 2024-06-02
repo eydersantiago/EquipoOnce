@@ -11,25 +11,23 @@ import com.uv.routinesappuv.repository.RutinasRepository
 import kotlinx.coroutines.launch
 
 class RoutinesViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository = RutinasRepository()
-    private val _rutinas = MutableLiveData<List<Rutina>>()
-    val rutinas: LiveData<List<Rutina>> get() = _rutinas
+    val context = getApplication<Application>()
+    private val repository = RutinasRepository(context)
+
+    private val _rutinas = MutableLiveData<MutableList<Rutina>>()
+    val rutinas: LiveData<MutableList<Rutina>> get() = _rutinas
 
     private val _ejercicios = MutableLiveData<List<Ejercicio>>()
     val ejercicios: LiveData<List<Ejercicio>> get() = _ejercicios
 
-
     fun fetchRutinas() {
         viewModelScope.launch {
-
             try {
-                repository.getRutinas()
+                val rutinas = repository.getRutinas()
+                _rutinas.value = rutinas
             } catch (e: Exception) {
-
+                // Handle error
             }
-
         }
     }
-
 }
-
