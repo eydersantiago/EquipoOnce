@@ -69,27 +69,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <Spinner
             android:id="@+id/inputNombreEjercicio"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="36dp"
             android:layout_marginVertical="15dp"
-            android:hint="Nombre Ejercicio"
+            android:backgroundTint="@color/black"
             app:layout_constraintTop_toBottomOf="@id/titleDescripcionRutina"
-            tools:ignore="MissingConstraints">
-
-            <AutoCompleteTextView
-                android:id="@+id/etNombreEjercicio"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="text"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputDescripcion"
@@ -113,27 +102,38 @@
                 android:paddingEnd="8dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/inputEquipamiento"-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="36dp"-->
+<!--            android:layout_marginVertical="15dp"-->
+<!--            android:hint="Equipamiento"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/inputDescripcion"-->
+<!--            tools:ignore="MissingConstraints">-->
+
+<!--            <AutoCompleteTextView-->
+<!--                android:id="@+id/etEquipamiento"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:inputType="text"-->
+<!--                android:paddingTop="10dp"-->
+<!--                android:paddingBottom="10dp"-->
+<!--                android:paddingStart="8dp"-->
+<!--                android:paddingEnd="8dp" />-->
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+        <Spinner
             android:id="@+id/inputEquipamiento"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="36dp"
             android:layout_marginVertical="15dp"
-            android:hint="Equipamiento"
+            android:backgroundTint="@color/black"
             app:layout_constraintTop_toBottomOf="@id/inputDescripcion"
-            tools:ignore="MissingConstraints">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-            <AutoCompleteTextView
-                android:id="@+id/etEquipamiento"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="text"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp" />
-        </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputSeries"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -186,7 +186,6 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="36dp"
             android:backgroundTint="@android:color/black"
-            android:cornerRadius="2dp"
             android:padding="12dp"
             android:text="Agregar Ejercicio"
             android:textColor="@android:color/white"
@@ -202,7 +201,6 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
             android:backgroundTint="@android:color/black"
-            android:cornerRadius="2dp"
             android:padding="12dp"
             android:text="Agregar Rutina"
             android:textColor="@android:color/white"
