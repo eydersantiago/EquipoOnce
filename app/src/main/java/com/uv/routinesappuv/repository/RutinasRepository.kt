@@ -1,25 +1,29 @@
 package com.uv.routinesappuv.repository
 
+import android.content.Context
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
-import com.uv.routinesappuv.model.Ejercicio
 import com.uv.routinesappuv.model.Rutina
-import com.google.firebase.firestore.ktx.toObjects
-class RutinasRepository {
+import kotlinx.coroutines.tasks.await
+
+class RutinasRepository(val context: Context) {
     private val db = FirebaseFirestore.getInstance()
 
-    fun getRutinas(callback: (List<Rutina>) -> Unit) {
-        db.collection("rutinas").get().addOnSuccessListener { result ->
-            val rutinas = result.toObjects<Rutina>()
-            callback(rutinas)
-        }
-    }
-    fun getEjercicios(rutinaId: String, callback: (List<Ejercicio>) -> Unit) {
-        db.collection("rutinas").document(rutinaId).collection("ejercicios").get()
-            .addOnSuccessListener { result ->
-                val ejercicios = result.toObjects<Ejercicio>()
-                callback(ejercicios)
+    suspend fun getRutinas(): MutableList<Rutina> {
+        val rutinas = mutableListOf<Rutina>()
+        try {
+            val result = db.collection("rutina").get().await()
+            for (document in result) {
+                val id = document.id
+                val nombre = document.getString("nombre_rutina") ?: ""
+                val descripcion = document.getString("descripcion_rutina") ?: ""
+                val rutina = Rutina(id, nombre, descripcion)
+                rutinas.add(rutina)
+                Log.d("Firestore", "${document.id} => ${document.data}")
             }
+        } catch (exception: Exception) {
+            Log.w("Firestore", "Error getting documents: ", exception)
+        }
+        return rutinas
     }
-
-
 }
