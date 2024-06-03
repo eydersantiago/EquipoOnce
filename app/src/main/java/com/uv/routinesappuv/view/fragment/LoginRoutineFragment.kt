@@ -33,6 +33,10 @@ class LoginRoutineFragment : Fragment() {
         binding.btnSubmit2.setOnClickListener {
             findNavController().navigate(R.id.fragment_edit_routine)
         }
+
+        binding.btnSubmit3.setOnClickListener {
+            findNavController().navigate(R.id.fragment_edit_exercise)
+        }
     }
 }
 

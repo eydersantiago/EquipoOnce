@@ -3,12 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.appcompat.widget.Toolbar
+
         android:id="@+id/toolbar_edit"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
+        android:background="@drawable/curved_top_left_corner"
+        android:paddingStart="50dp"
+        android:paddingTop="3dp"
         android:layout_marginTop="0dp"
-        android:background="@drawable/tb"
-        app:navigationIcon="@drawable/back_36">
+        app:navigationIcon="@drawable/back_36"
+        app:buttonGravity="center_vertical">
 
         <!-- Title centered -->
         <TextView
