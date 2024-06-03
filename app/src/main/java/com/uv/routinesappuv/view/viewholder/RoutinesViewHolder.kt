@@ -22,7 +22,7 @@ class RoutinesViewHolder(binding: ItemRutinaBinding, navController: NavControlle
     val bindingItem = binding
     val navController = navController
 
-    fun setItemCita(rutina: Rutina) {
+    fun setItemRutina(rutina: Rutina) {
 
 
         bindingItem.tvNombreRutina.text = rutina.nombre_rutina
