@@ -21,6 +21,6 @@ class RoutinesAdapter(private val listRutina: MutableList<Rutina>, private val n
 
     override fun onBindViewHolder(holder: RoutinesViewHolder, position: Int) {
         val rutina = listRutina[position]
-        holder.setItemCita(rutina)
+        holder.setItemRutina(rutina)
     }
 }

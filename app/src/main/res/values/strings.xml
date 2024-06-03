@@ -3,4 +3,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="editar_ejercicio">Editar Ejercicio</string>
+    <string name="nombre_rutina">Nombre Rutina</string>
+    <string name="descripcion_rutina">Descripción Rutina</string>
+    <string name="editar_rutina">Editar Rutina</string>
+
 </resources>

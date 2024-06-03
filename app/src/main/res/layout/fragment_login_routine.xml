@@ -25,6 +25,20 @@
             android:textSize="16sp"
             android:textStyle="bold"
      />
+        <Button
+            android:id="@+id/btnSubmit2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:backgroundTint="@color/black"
+
+            android:drawablePadding="8dp"
+            android:text="Go to edit routines"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            />
 
     </FrameLayout>
 </layout>
