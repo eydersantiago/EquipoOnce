@@ -21,7 +21,7 @@ class EditExerciseFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_edit_exercise, container, false)
         opciones = view.findViewById(R.id.spinner)
-        texto = view.findViewById(R.id.mostrar)
+        texto = view.findViewById(R.id.editTextText)
 
         val lista = listOf("opcion1", "opcion2", "opcion3")
         val adaptador = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, lista)
