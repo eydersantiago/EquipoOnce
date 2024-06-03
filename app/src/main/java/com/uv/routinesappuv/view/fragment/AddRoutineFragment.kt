@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.uv.routinesappuv.R
 import com.uv.routinesappuv.databinding.FragmentAddRoutineBinding
+import com.uv.routinesappuv.model.Ejercicio
+import com.uv.routinesappuv.model.Rutina
 import com.uv.routinesappuv.webService.ApiService
 import com.uv.routinesappuv.webService.ApiUtils
 import com.uv.routinesappuv.webService.RoutinesResponse
@@ -24,6 +26,7 @@ class AddRoutineFragment : Fragment() {
     private lateinit var binding: FragmentAddRoutineBinding
     private lateinit var apiService: ApiService
     private val routinesList = mutableListOf<String>()
+    private val exerciseList = mutableListOf<Ejercicio>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -155,7 +158,7 @@ class AddRoutineFragment : Fragment() {
                 binding.inputEquipamiento.selectedItem == "Equipamento") {
                 Toast.makeText(requireContext(), "Selecciona un nombre del ejercicio o equipamento", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(requireContext(), "FUNCIONO", Toast.LENGTH_SHORT).show()
+                saveExercise(binding)
             }
         }
 
@@ -178,5 +181,67 @@ class AddRoutineFragment : Fragment() {
         binding.btnAgregarEjercicio.isEnabled = isDescripcionFilled && isSeriesFilled && isRepeticionesFilled
         binding.btnAgregarRutina.isEnabled = isNombreRutinaFilled && isDescripcionRutinaFilled
     }
+
+    private fun saveExercise(binding: FragmentAddRoutineBinding) {
+        val nombreEjercicio = binding.inputNombreEjercicio.selectedItem.toString()
+        val descripcion = binding.etDescripcion.text.toString()
+        val equipamiento = binding.inputEquipamiento.selectedItem.toString()
+        val series = binding.etSeries.text.toString().toIntOrNull() ?: 0 // Convertir a Int o usar 0 si es nulo
+        val repeticiones = binding.etRepeticiones.text.toString().toIntOrNull() ?: 0 // Convertir a Int o usar 0 si es nulo
+
+        if (nombreEjercicio.isNotEmpty() && descripcion.isNotEmpty() && equipamiento.isNotEmpty()) {
+            val ejercicio = Ejercicio(
+                id = 0,
+                nombre_ejercicio = nombreEjercicio,
+                descripcion_ejercicio = descripcion,
+                equipamento = equipamiento,
+                series = series,
+                repeticiones = repeticiones
+            )
+
+            // Agrega el ejercicio al array o haz con él lo que necesites
+            exerciseList.add(ejercicio)
+
+            // Limpia los campos después de agregar el ejercicio si es necesario
+            clearFields(binding)
+
+            Toast.makeText(context, "Ejercicio creado !!", Toast.LENGTH_SHORT).show()
+            Log.e("EjerciciosCreados", "EJERCICIOS ${exerciseList} ")
+
+        } else {
+            Toast.makeText(context, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun saveRoutineWithExercises(binding: FragmentAddRoutineBinding) {
+        val nombreRutina = binding.etNombreRutina.text.toString()
+        val descripcionRutina = binding.etDescripcionRutina.text.toString()
+
+        // Verificar si se ha ingresado el nombre y la descripción de la rutina
+        if (nombreRutina.isNotEmpty() && descripcionRutina.isNotEmpty()) {
+            // Crear la rutina
+//            val routine = Rutina (
+//                nombre_rutina = nombreRutina,
+//                descripcion_rutina = descripcionRutina,
+//            )
+            // Limpiar los campos después de agregar la rutina si es necesario
+            clearFields(binding)
+
+            Toast.makeText(context, "Rutina creada con éxito", Toast.LENGTH_SHORT).show()
+//            Log.d("RutinaCreada", "Rutina: $routine")
+        } else {
+            Toast.makeText(context, "Por favor, completa todos los campos de la rutina", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    private fun clearFields(binding: FragmentAddRoutineBinding) {
+        binding.inputNombreEjercicio.setSelection(0)
+        binding.etDescripcion.text.clear()
+        binding.inputEquipamiento.setSelection(0) // Reinicia el Spinner a su posición inicial
+        binding.etSeries.text.clear()
+        binding.etRepeticiones.text.clear()
+    }
+
 
 }
