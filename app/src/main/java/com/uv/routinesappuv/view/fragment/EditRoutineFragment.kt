@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.uv.routinesappuv.R
 import com.uv.routinesappuv.databinding.FragmentEditRoutineBinding
 import com.uv.routinesappuv.model.Ejercicio
+import com.uv.routinesappuv.view.adapter.ExercisesAdapter
 import com.uv.routinesappuv.view.adapter.RoutinesAdapter
 
 class EditRoutineFragment : Fragment() {
@@ -52,7 +53,7 @@ class EditRoutineFragment : Fragment() {
 
         val recycler = binding.recyclerview
         recycler.layoutManager = LinearLayoutManager(context)
-        val adapter = RoutinesAdapter(listExercises)
+        val adapter = ExercisesAdapter(listExercises)
         recycler.adapter = adapter
         adapter.notifyDataSetChanged()
     }

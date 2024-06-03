@@ -6,8 +6,6 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.uv.routinesappuv.R
-import com.uv.routinesappuv.databinding.ItemExerciseBinding
-import com.uv.routinesappuv.model.Ejercicio
 import com.uv.routinesappuv.utils.Constants
 import com.uv.routinesappuv.webService.ApiService
 import com.uv.routinesappuv.webService.ImageResponse
@@ -16,25 +14,28 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import com.uv.routinesappuv.databinding.ItemRutinaBinding
+import com.uv.routinesappuv.model.Rutina
 
-class RoutinesViewHolder(binding: ItemExerciseBinding) : RecyclerView.ViewHolder(binding.root){
+class RoutinesViewHolder(binding: ItemRutinaBinding, navController: NavController):
+    RecyclerView.ViewHolder(binding.root) {
+    val bindingItem = binding
+    val navController = navController
 
-    val bindingExerciseItem = binding
+    fun setItemRutina(rutina: Rutina) {
 
-    fun setItemExercise(exercise: Ejercicio){
-        bindingExerciseItem.tvNombreEjercicio.text = exercise.nombre_ejercicio
-        bindingExerciseItem.tvDescripcion.text = exercise.descripcion_ejercicio
-        bindingExerciseItem.tvEquipamento.text = exercise.equipamento
-        bindingExerciseItem.tvSeries.text = "${exercise.series}"
-        bindingExerciseItem.tvRepeticiones.text = "${exercise.repeticiones}"
 
-//        bindingExerciseItem.cvRutina.setOnClickListener{
-//            val bundle = Bundle()
-//            bundle.putSerializable("clave", exercise)
-//        }
+        bindingItem.tvNombreRutina.text = rutina.nombre_rutina
+        bindingItem.tvDescripcion.text = "${rutina.descripcion_rutina}"
 
+        bindingItem.cvRutina.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putSerializable("clave", rutina)
+            navController.navigate(
+                R.id.action_add_routine, bundle
+            )
+        }
     }
-
 
 
 }
