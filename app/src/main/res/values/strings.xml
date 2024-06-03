@@ -5,5 +5,6 @@
     <string name="nombre_rutina">Nombre Rutina</string>
     <string name="descripcion_rutina">Descripción Rutina</string>
     <string name="editar_rutina">Editar Rutina</string>
+    <string name="login_with_google">Ingresar con Google</string>
 
 </resources>
