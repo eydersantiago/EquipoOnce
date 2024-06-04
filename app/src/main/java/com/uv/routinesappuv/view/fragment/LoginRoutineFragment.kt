@@ -27,12 +27,12 @@ class LoginRoutineFragment : Fragment() {
 
     }
     private fun controladores() {
-        binding.btnSubmit.setOnClickListener {
+        /*binding.btnSubmit.setOnClickListener {
             findNavController().navigate(R.id.fragment_home_routine)
         }
         binding.btnSubmit2.setOnClickListener {
             findNavController().navigate(R.id.fragment_edit_routine)
-        }
+        }*/
     }
 }
 

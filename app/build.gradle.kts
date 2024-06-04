@@ -103,6 +103,7 @@ dependencies {
 
     //authentication
     implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.android.gms:play-services-auth:19.0.0")
 
     //firestore:
     implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
