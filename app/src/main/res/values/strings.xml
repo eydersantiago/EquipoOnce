@@ -5,8 +5,11 @@
     <string name="nombre_rutina">Nombre Rutina</string>
     <string name="descripcion_rutina">Descripción Rutina</string>
     <string name="editar_rutina">Editar Rutina</string>
-    <string name="login_with_google">Ingresar con Google</string>
     <string name="my_routines_app">My routines App</string>
     <string name="default_web_client_id">53115576143-9ic271j08t6tnrch5kqtqij60sc1uveb.apps.googleusercontent.com</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="login">Ingresar</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
 
 </resources>
