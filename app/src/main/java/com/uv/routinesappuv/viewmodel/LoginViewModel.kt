@@ -12,9 +12,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     //registerUser se comunica con el repository
     fun registerUser(email: String, pass: String, isRegister: (Boolean) -> Unit) {
-        Log.e("testregistro", "$email------$pass")
         repository.registerUser(email, pass) { response ->
-            Log.e("testregistro", "$response")
             isRegister(response)
         }
     }

@@ -30,21 +30,16 @@ class RutinasRepository(val context: Context) {
     }
 
     fun registerUser(email: String, pass: String, isRegisterComplete: (Boolean) -> Unit) {
-        Log.e("testregistro", "$email-------$pass")
         if (email.isNotEmpty() && pass.isNotEmpty()) {
-            Log.e("testregistro", "entre al if")
             firebaseAuth.createUserWithEmailAndPassword(email, pass)
-                .addOnCompleteListener {task ->
-                    Log.e("testregistro", "$task")
+                .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         isRegisterComplete(true)
                     } else {
-                        Log.e("testregistro", "Error al registrar: ${task.exception}")
                         isRegisterComplete(false)
                     }
                 }
         } else {
-            Log.e("testregistro", "entre al else")
             isRegisterComplete(false)
         }
     }
