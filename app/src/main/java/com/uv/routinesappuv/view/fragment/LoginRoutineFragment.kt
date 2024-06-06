@@ -61,7 +61,13 @@ class LoginRoutineFragment : Fragment() {
     }
 
     private fun goToHome() {
-        findNavController().navigate(R.id.fragment_home_routine)
+        binding.btnLogin.setOnClickListener {
+            val dataEmail = binding.etEmail.text.toString()
+            val bundle = Bundle()
+            bundle.putString("mail", dataEmail)
+            findNavController().navigate(R.id.fragment_home_routine, bundle)
+        }
+
     }
 
     private fun loginUser() {
