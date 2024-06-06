@@ -107,4 +107,11 @@ dependencies {
     //firestore:
     implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
     implementation("com.google.firebase:firebase-firestore")
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-core:3.11.2")
+    testImplementation ("org.mockito:mockito-inline:3.11.2")
+    androidTestImplementation ("androidx.test:core:1.4.0")
+    androidTestImplementation ("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.4.0")
+
 }

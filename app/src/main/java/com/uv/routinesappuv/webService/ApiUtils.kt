@@ -1,5 +1,7 @@
 package com.uv.routinesappuv.webService
 
+import com.uv.routinesappuv.utils.RetrofitClient
+
 class ApiUtils {
     companion object {
         fun getApiService(): ApiService {
