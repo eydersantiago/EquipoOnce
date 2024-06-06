@@ -32,7 +32,7 @@
                 android:paddingTop="10dp"
                 android:paddingEnd="70dp"
                 android:paddingStart="50dp"
-                android:text="Hola, Jungkook"
+                android:text="Routines App"
                 android:textColor="#FFFFFF"
                 android:textSize="24sp"
                 android:textStyle="bold" />
