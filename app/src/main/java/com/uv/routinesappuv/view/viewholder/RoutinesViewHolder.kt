@@ -32,7 +32,7 @@ class RoutinesViewHolder(binding: ItemRutinaBinding, navController: NavControlle
             val bundle = Bundle()
             bundle.putSerializable("clave", rutina)
             navController.navigate(
-                R.id.action_add_routine, bundle
+                R.id.action_fragment_home_routine_to_fragment_detail_routine, bundle
             )
         }
     }
