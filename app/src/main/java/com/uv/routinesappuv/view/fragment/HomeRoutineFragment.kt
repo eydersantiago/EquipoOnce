@@ -56,6 +56,10 @@ class HomeRoutineFragment : Fragment() {
         binding.btnFragmentNuevaCita.setOnClickListener {
             findNavController().navigate(R.id.fragment_add_routine)
         }
+        //temporal mientras se hace lo de detalle rutina para poder ver los fragments
+        binding.btnSubmit2.setOnClickListener {
+            findNavController().navigate(R.id.fragment_edit_routine)
+        }
     }
     private fun capturarData(){
         val email = arguments?.getString("email")
