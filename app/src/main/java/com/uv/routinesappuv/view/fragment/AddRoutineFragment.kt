@@ -21,12 +21,18 @@ import com.uv.routinesappuv.webService.RoutinesResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.uv.routinesappuv.repository.RutinasRepository
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+
 
 class AddRoutineFragment : Fragment() {
     private lateinit var binding: FragmentAddRoutineBinding
+    private lateinit var rutinasRepository: RutinasRepository
     private lateinit var apiService: ApiService
     private val routinesList = mutableListOf<String>()
     private val exerciseList = mutableListOf<Ejercicio>()
+    private var countEjercicios = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +43,7 @@ class AddRoutineFragment : Fragment() {
 
         // Initialize apiService before calling fetchExercises
         apiService = ApiUtils.getApiService()
+        rutinasRepository = RutinasRepository(requireContext())
         fetchExercises()
 
         setupToolbar()
@@ -164,10 +171,10 @@ class AddRoutineFragment : Fragment() {
 
         binding.btnAgregarRutina.setOnClickListener {
             if (binding.etNombreRutina.text.toString().isEmpty() ||
-                binding.etDescripcion.text.toString().isEmpty()) {
+                binding.etDescripcionRutina.text.toString().isEmpty()) {
                 Toast.makeText(requireContext(), "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(requireContext(), "FUNCIONO RUTINA", Toast.LENGTH_SHORT).show()
+                saveRoutineWithExercises(binding)
             }
         }
     }
@@ -191,7 +198,7 @@ class AddRoutineFragment : Fragment() {
 
         if (nombreEjercicio.isNotEmpty() && descripcion.isNotEmpty() && equipamiento.isNotEmpty()) {
             val ejercicio = Ejercicio(
-                id = 0,
+                id = countEjercicios++,
                 nombre_ejercicio = nombreEjercicio,
                 descripcion_ejercicio = descripcion,
                 equipamento = equipamiento,
@@ -209,7 +216,7 @@ class AddRoutineFragment : Fragment() {
             Log.e("EjerciciosCreados", "EJERCICIOS ${exerciseList} ")
 
         } else {
-            Toast.makeText(context, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Por favor, completa todos los campos de ejercicio", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -220,15 +227,24 @@ class AddRoutineFragment : Fragment() {
         // Verificar si se ha ingresado el nombre y la descripción de la rutina
         if (nombreRutina.isNotEmpty() && descripcionRutina.isNotEmpty()) {
             // Crear la rutina
-//            val routine = Rutina (
-//                nombre_rutina = nombreRutina,
-//                descripcion_rutina = descripcionRutina,
-//            )
-            // Limpiar los campos después de agregar la rutina si es necesario
-            clearFields(binding)
+            val routine = Rutina (
+                nombre_rutina = nombreRutina,
+                descripcion_rutina = descripcionRutina,
+                ejercicios = exerciseList
+            )
 
-            Toast.makeText(context, "Rutina creada con éxito", Toast.LENGTH_SHORT).show()
-//            Log.d("RutinaCreada", "Rutina: $routine")
+
+            // Guardar la rutina en Firestore usando el repositorio
+            lifecycleScope.launch {
+                rutinasRepository.saveRoutine(routine)
+                Toast.makeText(context, "Rutina creada con éxito", Toast.LENGTH_SHORT).show()
+                countEjercicios = 0
+                exerciseList.clear() // Limpiar la lista de ejercicios
+                clearFields(binding)
+            }
+
+            onBackPressed()
+
         } else {
             Toast.makeText(context, "Por favor, completa todos los campos de la rutina", Toast.LENGTH_SHORT).show()
         }
