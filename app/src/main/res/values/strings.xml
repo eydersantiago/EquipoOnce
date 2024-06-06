@@ -1,9 +1,15 @@
 <resources>
-    <string name="app_name">My Routines</string>
+    <string name="app_name">My Routines App</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nombre_rutina">Nombre Rutina</string>
     <string name="descripcion_rutina">Descripción Rutina</string>
     <string name="editar_rutina">Editar Rutina</string>
+    <string name="my_routines_app">My routines App</string>
+    <string name="default_web_client_id">53115576143-9ic271j08t6tnrch5kqtqij60sc1uveb.apps.googleusercontent.com</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="login">Ingresar</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
 
 </resources>

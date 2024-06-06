@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.uv.routinesappuv.databinding.FragmentHomeRoutineBinding
 import com.uv.routinesappuv.viewmodel.RoutinesViewModel
 import com.uv.routinesappuv.R
@@ -20,7 +21,7 @@ import com.uv.routinesappuv.view.adapter.RoutinesAdapter
 class HomeRoutineFragment : Fragment() {
     private lateinit var binding: FragmentHomeRoutineBinding
     private val routinesViewModel: RoutinesViewModel by viewModels()
-
+    private lateinit var auth: FirebaseAuth
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,7 +40,8 @@ class HomeRoutineFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         controladores();
         observadorViewModel();
-
+        capturarData()
+        getEmail()
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
@@ -54,10 +56,32 @@ class HomeRoutineFragment : Fragment() {
         binding.btnFragmentNuevaCita.setOnClickListener {
             findNavController().navigate(R.id.fragment_add_routine)
         }
+        //temporal mientras se hace lo de detalle rutina para poder ver los fragments
+        binding.btnSubmit2.setOnClickListener {
+            findNavController().navigate(R.id.fragment_edit_routine)
+        }
+    }
+    private fun capturarData(){
+        val email = arguments?.getString("email")
+        Log.d("email logged in", "${email}")
     }
     private fun observadorViewModel() {
         observerListRutinas()
 
+    }
+    private fun getEmail(){
+        auth = FirebaseAuth.getInstance()
+
+        // Obtener el usuario actualmente autenticado
+        val user = auth.currentUser
+        user?.let {
+            // Obtener el correo electrónico del usuario
+            val email = user.email
+           Log.d("emaillll", "${email}")
+        } ?: run {
+            // Manejar el caso en que no hay un usuario autenticado
+          //  emailTextView.text = "No hay usuario autenticado"
+        }
     }
 
     private fun observerListRutinas() {
