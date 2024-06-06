@@ -5,5 +5,6 @@ import java.io.Serializable
 data class Rutina (
     val id: String,
     val nombre_rutina: String,
-    val descripcion_rutina: String
+    val descripcion_rutina: String,
+    val user_mail: String
 ) : Serializable

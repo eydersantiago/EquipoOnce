@@ -20,10 +20,10 @@ class RoutinesViewModel(application: Application) : AndroidViewModel(application
     private val _ejercicios = MutableLiveData<List<Ejercicio>>()
     val ejercicios: LiveData<List<Ejercicio>> get() = _ejercicios
 
-    fun fetchRutinas() {
+    fun fetchRutinas(mail: String) {
         viewModelScope.launch {
             try {
-                val rutinas = repository.getRutinas()
+                val rutinas = repository.getRutinas(mail)
                 _rutinas.value = rutinas
             } catch (e: Exception) {
                 // Handle error
