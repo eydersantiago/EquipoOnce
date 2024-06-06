@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,15 +54,22 @@ class LoginRoutineFragment : Fragment() {
         val pass = binding.etPass.text.toString()
         loginViewModel.registerUser(email, pass) { isRegister ->
             if (isRegister) {
-                goToHome()
+                goToHome(email)
             } else {
                 Toast.makeText(requireContext(), "Error en el registro, vuelva a intentarlo", Toast.LENGTH_LONG).show()
             }
         }
     }
 
-    private fun goToHome() {
-        findNavController().navigate(R.id.fragment_home_routine)
+    private fun goToHome(dataEmail: String) {
+
+
+            val bundle = Bundle()
+            bundle.putString("mail", dataEmail)
+        Log.d("email log", "${dataEmail}")
+            findNavController().navigate(R.id.fragment_home_routine, bundle)
+
+
     }
 
     private fun loginUser() {
@@ -69,7 +77,7 @@ class LoginRoutineFragment : Fragment() {
         val pass = binding.etPass.text.toString()
         loginViewModel.loginUser(email, pass) { isLogin ->
             if (isLogin) {
-                goToHome()
+                goToHome(email)
             } else {
                 Toast.makeText(requireContext(), "Login incorrecto, vuelva a intentarlo", Toast.LENGTH_LONG).show()
             }
@@ -77,11 +85,13 @@ class LoginRoutineFragment : Fragment() {
     }
 
     private fun sesion() {
+        val mail = binding.etEmail.text.toString()
+
         val email = sharedPreferences.getString("email", null)
         loginViewModel.sesion(email) { isEnableView ->
             if (isEnableView) {
                 binding.clContenedor.visibility = View.INVISIBLE
-                goToHome()
+                goToHome(mail)
             }
         }
     }
