@@ -5,9 +5,11 @@ import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.uv.routinesappuv.model.Rutina
 import kotlinx.coroutines.tasks.await
+import com.google.firebase.auth.FirebaseAuth
 
 class RutinasRepository(val context: Context) {
     private val db = FirebaseFirestore.getInstance()
+    private val firebaseAuth = FirebaseAuth.getInstance()
 
     suspend fun getRutinas(): MutableList<Rutina> {
         val rutinas = mutableListOf<Rutina>()
@@ -25,5 +27,40 @@ class RutinasRepository(val context: Context) {
             Log.w("Firestore", "Error getting documents: ", exception)
         }
         return rutinas
+    }
+
+    fun registerUser(email: String, pass: String, isRegisterComplete: (Boolean) -> Unit) {
+        Log.e("testregistro", "$email-------$pass")
+        if (email.isNotEmpty() && pass.isNotEmpty()) {
+            Log.e("testregistro", "entre al if")
+            firebaseAuth.createUserWithEmailAndPassword(email, pass)
+                .addOnCompleteListener {task ->
+                    Log.e("testregistro", "$task")
+                    if (task.isSuccessful) {
+                        isRegisterComplete(true)
+                    } else {
+                        Log.e("testregistro", "Error al registrar: ${task.exception}")
+                        isRegisterComplete(false)
+                    }
+                }
+        } else {
+            Log.e("testregistro", "entre al else")
+            isRegisterComplete(false)
+        }
+    }
+
+    fun loginUser(email: String, pass: String, isLoginComplete: (Boolean) -> Unit) {
+        if (email.isNotEmpty() && pass.isNotEmpty()) {
+            firebaseAuth.signInWithEmailAndPassword(email, pass)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        isLoginComplete(true)
+                    } else {
+                        isLoginComplete(false)
+                    }
+                }
+        } else {
+            isLoginComplete(false)
+        }
     }
 }
