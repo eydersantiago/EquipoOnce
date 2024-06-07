@@ -38,7 +38,7 @@ class RutinasRepository(val context: Context) {
                     ejercicios.add(ejercicio)
                 }
 
-                val rutina = Rutina(nombre, descripcion, ejercicios)
+                val rutina = Rutina(nombre, descripcion, ejercicios, userEmail)
                 rutinas.add(rutina)
                 Log.d("Firestore", "${document.id} => ${document.data}")
             }
