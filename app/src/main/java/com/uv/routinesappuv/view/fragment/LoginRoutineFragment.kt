@@ -89,7 +89,7 @@ class LoginRoutineFragment : Fragment() {
     private fun sesion() {
         val mail = binding.etEmail.text.toString()
 
-        val email = sharedPreferences.getString("email", null)
+        val email = sharedPreferences.getString("email", "jheison@hotmail.com")
         loginViewModel.sesion(email) { isEnableView ->
             if (isEnableView) {
                 binding.clContenedor.visibility = View.INVISIBLE
