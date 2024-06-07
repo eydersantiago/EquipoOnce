@@ -94,12 +94,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spinner2" />
 
-        <Button
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
+            android:layout_width="160dp"
+            android:layout_height="60dp"
             android:text="Editar Ejercicio"
-            android:background="@drawable/button_personalized"
+            android:backgroundTint="#000000"
+            app:cornerRadius="8dp"
+            app:strokeWidth="2dp"
+            app:strokeColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spinner4"

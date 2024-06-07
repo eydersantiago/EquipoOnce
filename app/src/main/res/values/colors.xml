@@ -4,7 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="rosa">#E91E63</color>
     <color name="toolbar">#000000</color>
-    <color name="white_with_transparency">#40FFFFFF</color> <!-- El valor 80 representa el nivel de transparencia -->
+    <color name="white_with_transparency">#C0FFFFFF</color>
     <color name="colorButtonBackground">#000000</color> <!-- Color de fondo del botón (negro) -->
     <color name="colorButtonBorder">#FFFFFF</color> <!-- Color del borde del botón (blanco) -->
 
