@@ -69,9 +69,9 @@
         <action
             android:id="@+id/action_fragment_edit_routine_to_fragment_home_routine"
             app:destination="@id/fragment_home_routine" />
-        <action
-            android:id="@+id/action_fragment_edit_routine_to_fragment_detail_routine"
-            app:destination="@id/fragment_detail_routine" />
+<!--        <action-->
+<!--            android:id="@+id/action_fragment_edit_routine_to_fragment_detail_routine"-->
+<!--            app:destination="@id/fragment_detail_routine" />-->
     </fragment>
 
     <fragment

@@ -10,14 +10,14 @@ import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.auth.FirebaseAuth
+//import com.google.firebase.auth.FirebaseAuth
 import com.uv.routinesappuv.R
 import com.uv.routinesappuv.databinding.FragmentDetailRoutineBinding
 import com.uv.routinesappuv.model.Rutina
 import com.uv.routinesappuv.view.adapter.ExercisesAdapter
-import com.uv.routinesappuv.view.adapter.RoutinesAdapter
+//import com.uv.routinesappuv.view.adapter.RoutinesAdapter
 import com.uv.routinesappuv.viewmodel.RoutinesViewModel
-import androidx.lifecycle.Observer
+//import androidx.lifecycle.Observer
 
 class DetailRoutineFragment : Fragment() {
     private lateinit var binding: FragmentDetailRoutineBinding
@@ -39,7 +39,7 @@ class DetailRoutineFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         dataRutina()
         controladores()
-        observadorViewModel();
+
     }
 
     private fun controladores() {
@@ -55,6 +55,7 @@ class DetailRoutineFragment : Fragment() {
                 R.id.action_fragment_detail_routine_to_fragment_edit_routine,
                 bundle
             )
+           // observadorViewModel();
         }
     }
 
@@ -79,37 +80,37 @@ class DetailRoutineFragment : Fragment() {
         findNavController().popBackStack()
     }
 
-    private fun observadorViewModel() {
-        observerListRutinas()
-
-    }
-
-    private fun observerListRutinas() {
-        val email = getEmail()
-
-        routinesViewModel.fetchRutinas(email.toString())
-        routinesViewModel.rutinas.observe(viewLifecycleOwner) { listRutinas ->
-            val recycler = binding.recyclerview
-            val layoutManager = LinearLayoutManager(context)
-            recycler.layoutManager = layoutManager
-            val adapter = RoutinesAdapter(listRutinas, findNavController())
-            recycler.adapter = adapter
-            adapter.notifyDataSetChanged()
-        }
-
-        routinesViewModel.rutinas.observe(viewLifecycleOwner, Observer { rutinas ->
-            // Log each rutina or update your UI here
-            rutinas.forEach { rutina ->
-                Log.d("HomeRoutineFragment", "Rutina: $rutina")
-            }
-        })
-    }
-
-    private fun getEmail(): String? {
-        val auth = FirebaseAuth.getInstance()
-        val user = auth.currentUser
-        return user?.email
-    }
+//    private fun observadorViewModel() {
+//        observerListRutinas()
+//
+//    }
+//
+//    private fun observerListRutinas() {
+//        val email = getEmail()
+//
+//        routinesViewModel.fetchRutinas(email.toString())
+//        routinesViewModel.rutinas.observe(viewLifecycleOwner) { listRutinas ->
+//            val recycler = binding.recyclerview
+//            val layoutManager = LinearLayoutManager(context)
+//            recycler.layoutManager = layoutManager
+//            val adapter = RoutinesAdapter(listRutinas, findNavController())
+//            recycler.adapter = adapter
+//            adapter.notifyDataSetChanged()
+//        }
+//
+//        routinesViewModel.rutinas.observe(viewLifecycleOwner, Observer { rutinas ->
+//            // Log each rutina or update your UI here
+//            rutinas.forEach { rutina ->
+//                Log.d("HomeRoutineFragment", "Rutina: $rutina")
+//            }
+//        })
+//    }
+//
+//    private fun getEmail(): String? {
+//        val auth = FirebaseAuth.getInstance()
+//        val user = auth.currentUser
+//        return user?.email
+//    }
 
 
 

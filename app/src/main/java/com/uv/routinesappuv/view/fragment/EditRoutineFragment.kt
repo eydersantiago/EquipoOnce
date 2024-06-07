@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.uv.routinesappuv.R
 import com.uv.routinesappuv.databinding.FragmentEditRoutineBinding
 import com.uv.routinesappuv.model.Rutina
 import com.uv.routinesappuv.view.adapter.ExercisesAdapter
@@ -59,7 +60,9 @@ class EditRoutineFragment : Fragment() {
         )
 
         rutinasViewModel.updateRutina(updatedRutina)
-        findNavController().popBackStack()
+        findNavController().navigate(
+            R.id.action_fragment_edit_routine_to_fragment_home_routine
+        )
     }
 
 
