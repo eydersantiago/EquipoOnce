@@ -76,6 +76,16 @@ class RutinasRepository(val context: Context) {
         }
     }
 
+    suspend fun getRoutineById(routineId: String): Rutina? {
+        return try {
+            val document = db.collection("rutina").document(routineId).get().await()
+            document.toObject(Rutina::class.java)
+        } catch (exception: Exception) {
+            Log.w("Firestore", "Error getting document: ", exception)
+            null
+        }
+    }
+
     fun registerUser(email: String, pass: String, isRegisterComplete: (Boolean) -> Unit) {
         Log.e("testregistro", "$email-------$pass")
         if (email.isNotEmpty() && pass.isNotEmpty()) {

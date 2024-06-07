@@ -22,6 +22,9 @@ class RoutinesViewModel(application: Application) : AndroidViewModel(application
     private val _ejercicios = MutableLiveData<List<Ejercicio>>()
     val ejercicios: LiveData<List<Ejercicio>> get() = _ejercicios
 
+    private val _routineDetail = MutableLiveData<Rutina>()
+    val routineDetail: LiveData<Rutina> get() = _routineDetail
+
     fun fetchRutinas(mail: String) {
         viewModelScope.launch {
             try {
@@ -29,6 +32,18 @@ class RoutinesViewModel(application: Application) : AndroidViewModel(application
                 _rutinas.value = rutinas
             } catch (e: Exception) {
                 // Handle error
+            }
+        }
+    }
+
+    fun loadRoutine(routineId: String) {
+        viewModelScope.launch {
+            try {
+                val rutina = repository.getRoutineById(routineId)
+                _routineDetail.value = rutina ?: throw NullPointerException("Routine is null")
+            } catch (e: Exception) {
+                // Handle error
+                Log.e("RoutinesViewModel", "Error loading routine: ${e.message}")
             }
         }
     }
@@ -63,3 +78,4 @@ class RoutinesViewModel(application: Application) : AndroidViewModel(application
         }
     }
 }
+
