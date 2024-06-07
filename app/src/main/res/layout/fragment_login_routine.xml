@@ -58,7 +58,8 @@
                 android:id="@+id/etPass"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textColorHint="#757575" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--<com.google.android.material.textfield.TextInputLayout
@@ -108,13 +109,16 @@
             android:layout_marginBottom="60dp"
             android:clickable="true"
             android:focusable="true"
+            android:minHeight="48dp"
             android:text="@string/registrarse"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

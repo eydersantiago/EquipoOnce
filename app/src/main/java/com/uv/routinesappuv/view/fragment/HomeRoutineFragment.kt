@@ -56,36 +56,37 @@ class HomeRoutineFragment : Fragment() {
         binding.btnFragmentNuevaCita.setOnClickListener {
             findNavController().navigate(R.id.fragment_add_routine)
         }
-        //temporal mientras se hace lo de detalle rutina para poder ver los fragments
-        binding.btnSubmit2.setOnClickListener {
-            findNavController().navigate(R.id.fragment_edit_routine)
+        binding.btnLogOut.setOnClickListener{
+            logout()
         }
+        //temporal mientras se hace lo de detalle rutina para poder ver los fragments
     }
+    private fun logout() {
+        val auth = FirebaseAuth.getInstance()
+        auth.signOut()
+        // Navigate to the login fragment
+        findNavController().navigate(R.id.action_fragment_home_logOut)
+        Log.d("Logout", "User logged out successfully.")
+    }
+
     private fun capturarData(){
         val email = arguments?.getString("email")
-        Log.d("email logged in", "${email}")
+
     }
     private fun observadorViewModel() {
         observerListRutinas()
 
     }
-    private fun getEmail(){
-        auth = FirebaseAuth.getInstance()
 
-        // Obtener el usuario actualmente autenticado
+    private fun getEmail(): String? {
+        val auth = FirebaseAuth.getInstance()
         val user = auth.currentUser
-        user?.let {
-            // Obtener el correo electrónico del usuario
-            val email = user.email
-           Log.d("emaillll", "${email}")
-        } ?: run {
-            // Manejar el caso en que no hay un usuario autenticado
-          //  emailTextView.text = "No hay usuario autenticado"
-        }
+        return user?.email
     }
-
     private fun observerListRutinas() {
-        routinesViewModel.fetchRutinas()
+        val email = getEmail()
+
+        routinesViewModel.fetchRutinas(email.toString())
         routinesViewModel.rutinas.observe(viewLifecycleOwner) { listRutinas ->
             val recycler = binding.recyclerview
             val layoutManager = LinearLayoutManager(context)

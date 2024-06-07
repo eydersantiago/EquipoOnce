@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.appcompat.widget.Toolbar
+
         android:id="@+id/toolbar_edit"
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -22,7 +23,7 @@
             android:layout_marginTop="0dp"
             android:layout_marginBottom="25dp"
             android:gravity="center"
-            android:text="Editar Rutina"
+            android:text="Editar Ejercicio"
             android:textColor="@android:color/white"
             android:textSize="30sp" /> <!-- Adjusted margin top -->
 

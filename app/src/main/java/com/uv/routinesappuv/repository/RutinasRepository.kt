@@ -12,10 +12,13 @@ class RutinasRepository(val context: Context) {
     private val db = FirebaseFirestore.getInstance()
     private val firebaseAuth = FirebaseAuth.getInstance()
 
-    suspend fun getRutinas(): MutableList<Rutina> {
+    suspend fun getRutinas(userEmail: String): MutableList<Rutina> {
         val rutinas = mutableListOf<Rutina>()
         try {
-            val result = db.collection("rutina").get().await()
+            val result = db.collection("rutina")
+                .whereEqualTo("user_mail", userEmail)
+                .get()
+                .await()
             for (document in result) {
                 val nombre = document.getString("nombre_rutina") ?: ""
                 val descripcion = document.getString("descripcion_rutina") ?: ""
@@ -35,7 +38,7 @@ class RutinasRepository(val context: Context) {
                     ejercicios.add(ejercicio)
                 }
 
-                val rutina = Rutina(nombre, descripcion, ejercicios)
+                val rutina = Rutina(nombre, descripcion, ejercicios, userEmail)
                 rutinas.add(rutina)
                 Log.d("Firestore", "${document.id} => ${document.data}")
             }

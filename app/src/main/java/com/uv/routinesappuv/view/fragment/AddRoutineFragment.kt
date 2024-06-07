@@ -23,6 +23,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import com.uv.routinesappuv.repository.RutinasRepository
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 
@@ -220,7 +221,14 @@ class AddRoutineFragment : Fragment() {
         }
     }
 
+    private fun getEmail(): String? {
+        val auth = FirebaseAuth.getInstance()
+        val user = auth.currentUser
+        return user?.email
+    }
+
     private fun saveRoutineWithExercises(binding: FragmentAddRoutineBinding) {
+        val email = getEmail().toString()
         val nombreRutina = binding.etNombreRutina.text.toString()
         val descripcionRutina = binding.etDescripcionRutina.text.toString()
 
@@ -230,7 +238,8 @@ class AddRoutineFragment : Fragment() {
             val routine = Rutina (
                 nombre_rutina = nombreRutina,
                 descripcion_rutina = descripcionRutina,
-                ejercicios = exerciseList
+                ejercicios = exerciseList,
+                email
             )
 
 
