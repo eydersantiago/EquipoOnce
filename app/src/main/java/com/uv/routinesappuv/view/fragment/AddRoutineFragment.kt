@@ -236,6 +236,7 @@ class AddRoutineFragment : Fragment() {
         if (nombreRutina.isNotEmpty() && descripcionRutina.isNotEmpty()) {
             // Crear la rutina
             val routine = Rutina (
+                id = "",
                 nombre_rutina = nombreRutina,
                 descripcion_rutina = descripcionRutina,
                 ejercicios = exerciseList,

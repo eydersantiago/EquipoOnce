@@ -22,7 +22,7 @@ class RutinasRepository(val context: Context) {
             for (document in result) {
                 val nombre = document.getString("nombre_rutina") ?: ""
                 val descripcion = document.getString("descripcion_rutina") ?: ""
-
+                val id = document.id
                 // Obtener el arreglo de ejercicios
                 val ejercicios = mutableListOf<Ejercicio>()
                 val ejerciciosList = document.get("ejercicios") as? List<Map<String, Any>> ?: emptyList()
@@ -38,7 +38,7 @@ class RutinasRepository(val context: Context) {
                     ejercicios.add(ejercicio)
                 }
 
-                val rutina = Rutina(nombre, descripcion, ejercicios, userEmail)
+                val rutina = Rutina(id, nombre, descripcion, ejercicios, userEmail)
                 rutinas.add(rutina)
                 Log.d("Firestore", "${document.id} => ${document.data}")
             }
@@ -90,6 +90,6 @@ class RutinasRepository(val context: Context) {
                 }
         } else {
             isLoginComplete(false)
+            }
         }
-    }
 }
