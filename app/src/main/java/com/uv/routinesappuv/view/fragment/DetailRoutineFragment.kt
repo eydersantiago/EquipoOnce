@@ -39,6 +39,20 @@ class DetailRoutineFragment : Fragment() {
 
     private fun controladores() {
         // Implementa tus controladores aquí si es necesario
+        binding.btnDeleteRoutine.setOnClickListener {
+            deleteRutina()
+        }
+
+        binding.btnEditRoutine.setOnClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("clave", receivedRutina)
+            }
+            findNavController().navigate(
+                R.id.action_fragment_detail_routine_to_fragment_edit_routine,
+                bundle
+            )
+            // observadorViewModel();
+        }
     }
 
     private fun dataRutina() {
@@ -60,5 +74,9 @@ class DetailRoutineFragment : Fragment() {
     }
     private fun onBackPressed() {
         findNavController().navigate(R.id.action_fragment_detail_routine_to_fragment_home_routine)
+    }
+    private fun deleteRutina() {
+        rutinasViewModel.deleteRutina(receivedRutina.id)
+        findNavController().popBackStack()
     }
 }
