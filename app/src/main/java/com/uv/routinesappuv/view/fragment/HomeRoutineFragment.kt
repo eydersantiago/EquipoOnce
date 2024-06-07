@@ -71,7 +71,7 @@ class HomeRoutineFragment : Fragment() {
 
     private fun capturarData(){
         val email = arguments?.getString("email")
-        Log.d("email logged in", "${email}")
+
     }
     private fun observadorViewModel() {
         observerListRutinas()
@@ -85,7 +85,7 @@ class HomeRoutineFragment : Fragment() {
     }
     private fun observerListRutinas() {
         val email = getEmail()
-        Log.d("Email Home", "Mail: $email")
+
         routinesViewModel.fetchRutinas(email.toString())
         routinesViewModel.rutinas.observe(viewLifecycleOwner) { listRutinas ->
             val recycler = binding.recyclerview
