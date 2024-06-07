@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -73,5 +74,7 @@ class DetailRoutineFragment : Fragment() {
     private fun deleteRutina() {
         rutinasViewModel.deleteRutina(receivedRutina.id) // Use the instance method
         findNavController().popBackStack()
+
+        Toast.makeText(context, "Rutina eliminada !!", Toast.LENGTH_SHORT).show()
     }
 }
