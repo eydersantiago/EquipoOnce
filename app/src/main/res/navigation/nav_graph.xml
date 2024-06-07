@@ -24,6 +24,9 @@
             android:id="@+id/action_add_routine"
             app:destination="@id/fragment_add_routine" />
         <action
+            android:id="@+id/action_see_routine"
+            app:destination="@id/fragment_detail_routine" />
+        <action
             android:id="@+id/action_fragment_home_logOut"
             app:destination="@id/fragment_login" />
     </fragment>
