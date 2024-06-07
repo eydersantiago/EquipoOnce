@@ -5,16 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.uv.routinesappuv.R
 import com.uv.routinesappuv.databinding.FragmentEditRoutineBinding
-import com.uv.routinesappuv.model.Ejercicio
+import com.uv.routinesappuv.model.Rutina
 import com.uv.routinesappuv.view.adapter.ExercisesAdapter
-import com.uv.routinesappuv.view.adapter.RoutinesAdapter
+import com.uv.routinesappuv.viewmodel.RoutinesViewModel
 
 class EditRoutineFragment : Fragment() {
     private lateinit var binding: FragmentEditRoutineBinding
-    //private lateinit var receivedEjercicio: Ejercicio
+
+    private val rutinasViewModel: RoutinesViewModel by viewModels()
+    private lateinit var receivedRutina: Rutina
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,38 +31,37 @@ class EditRoutineFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //dataRoutines()
+        dataRutina()
         controladores()
-
     }
 
-//    private fun dataRoutines(){
-//        val receivedBundle = arguments
-//        receivedEjercicio = receivedBundle?.getSerializable("dataEjercicio") as Ejercicio
-//        binding..setText(receivedEjercicio.name)
-//        binding.etPrice.setText(receivedEjercicio.price.toString())
-//        binding.etQuantity.setText(receivedEjercicio.quantity.toString())
-//
-//    }
-
-    private fun controladores(){
-        recycler()
+    private fun controladores() {
+        binding.btnEdit.setOnClickListener {
+            saveRutina()
+        }
     }
 
-    fun recycler(){
-        var listExercises = mutableListOf(
-            Ejercicio(1, "abdominales", "fortalecer_abdomen", "mancuernas",2, 3),
-            Ejercicio(2, "sentadillas", "fortalecer_piernas", "máquina",4, 5)
-        )
+    private fun dataRutina() {
+        val receivedBundle = arguments
+        receivedRutina = receivedBundle?.getSerializable("clave") as Rutina
+
+        binding.etNombreRutina.setText(receivedRutina.nombre_rutina)
+        binding.etDescripcion.setText(receivedRutina.descripcion_rutina)
 
         val recycler = binding.recyclerview
         recycler.layoutManager = LinearLayoutManager(context)
-        val adapter = ExercisesAdapter(listExercises)
-        recycler.adapter = adapter
-        adapter.notifyDataSetChanged()
+        recycler.adapter = ExercisesAdapter(receivedRutina.ejercicios)
     }
 
+    private fun saveRutina() {
+        val updatedRutina = receivedRutina.copy(
+            nombre_rutina = binding.etNombreRutina.text.toString(),
+            descripcion_rutina = binding.etDescripcion.text.toString()
+        )
 
+        rutinasViewModel.updateRutina(updatedRutina)
+        findNavController().popBackStack()
+    }
 
 
 }

@@ -42,17 +42,15 @@ class DetailRoutineFragment : Fragment() {
             deleteRutina()
         }
 
-        // Uncomment and implement this if you want to add edit functionality
-        // binding.btnEditRoutine.setOnClickListener {
-        //     val bundle = Bundle()
-        //     bundle.putSerializable("dataCita", receivedCita)
-        //     val detalleCitaFragment = DetalleCitaFragment()
-        //     detalleCitaFragment.arguments = bundle
-        //     findNavController().navigate(
-        //         R.id.action_itemDetailsFragment_to_itemEditFragment,
-        //         bundle
-        //     )
-        // }
+        binding.btnEditRoutine.setOnClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("clave", receivedRutina)
+            }
+            findNavController().navigate(
+                R.id.action_fragment_detail_routine_to_fragment_edit_routine,
+                bundle
+            )
+        }
     }
 
     private fun dataRutina() {
