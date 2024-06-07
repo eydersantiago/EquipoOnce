@@ -60,6 +60,8 @@
         </LinearLayout>
 
         <!-- RecyclerView -->
+
+        <!-- Floating Action Button -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
@@ -67,11 +69,12 @@
             android:paddingTop="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/headerLayout"
+            app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/item_rutina" />
 
-        <!-- Floating Action Button -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnFragmentNuevaCita"
             android:layout_width="wrap_content"

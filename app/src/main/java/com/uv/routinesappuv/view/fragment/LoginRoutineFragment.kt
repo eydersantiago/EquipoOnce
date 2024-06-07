@@ -47,6 +47,8 @@ class LoginRoutineFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             loginUser()
         }
+
+
     }
 
     private fun registerUser() {
