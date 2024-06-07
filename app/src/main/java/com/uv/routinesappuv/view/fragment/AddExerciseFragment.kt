@@ -62,7 +62,7 @@ class AddExerciseFragment : Fragment() {
     }
 
     private fun fetchExercises() {
-        apiService.getExercises().enqueue(object : Callback<List<RoutinesResponse>> {
+        apiService.getExercises(0).enqueue(object : Callback<List<RoutinesResponse>> {
             override fun onResponse(
                 call: Call<List<RoutinesResponse>>,
                 response: Response<List<RoutinesResponse>>
