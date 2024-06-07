@@ -33,6 +33,7 @@ class AddExerciseFragment : Fragment() {
     private lateinit var btnAgregar: Button
     private lateinit var apiService: ApiService
     private lateinit var receivedRutina: Rutina
+
     private val equipamentoList = listOf(
         "Selecciona un equipamiento",
         "Cinta de correr (treadmill)",
