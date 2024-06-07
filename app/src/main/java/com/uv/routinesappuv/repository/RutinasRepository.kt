@@ -58,6 +58,15 @@ class RutinasRepository(val context: Context) {
         }
     }
 
+    suspend fun deleteRoutine(rutinaId: String) {
+        try {
+            db.collection("rutina").document(rutinaId).delete().await()
+            Log.d("Firestore", "Rutina eliminada exitosamente")
+        } catch (exception: Exception) {
+            Log.w("Firestore", "Error al eliminar la rutina: ", exception)
+        }
+    }
+
     fun registerUser(email: String, pass: String, isRegisterComplete: (Boolean) -> Unit) {
         Log.e("testregistro", "$email-------$pass")
         if (email.isNotEmpty() && pass.isNotEmpty()) {
