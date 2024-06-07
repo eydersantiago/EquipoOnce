@@ -16,7 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.fragment.EditExerciseFragment">
+        tools:context=".view.fragment.AddExerciseFragment">
 
         <include
             android:id="@+id/contentToolbar_edit"
