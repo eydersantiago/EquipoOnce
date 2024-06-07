@@ -79,7 +79,7 @@
 
     <fragment
         android:id="@+id/fragment_edit_exercise"
-        android:name="com.uv.routinesappuv.view.fragment.AddExerciseFragment"
+        android:name="com.uv.routinesappuv.view.fragment.EditExerciseFragment"
         android:label="fragment_edit_exercise"
         tools:layout="@layout/fragment_edit_exercise">
 

@@ -47,6 +47,11 @@ class EditRoutineFragment : Fragment() {
                 bundle
             )
         }
+        binding.contentToolbarEditar.toolbarEdit.setNavigationOnClickListener { onBackPressed() }
+    }
+
+    private fun onBackPressed() {
+        findNavController().navigateUp()
     }
 
     private fun dataRutina() {
