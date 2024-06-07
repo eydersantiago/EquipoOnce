@@ -6,6 +6,7 @@
     <string name="nombre_rutina">Nombre Rutina</string>
     <string name="descripcion_rutina">Descripción Rutina</string>
     <string name="editar_rutina">Editar Rutina</string>
+    <string name="agregar_rutina">Agregar Rutina</string>
     <string name="my_routines_app">My routines App</string>
     <string name="default_web_client_id">53115576143-9ic271j08t6tnrch5kqtqij60sc1uveb.apps.googleusercontent.com</string>
     <string name="registrarse">Registrarse</string>
@@ -14,6 +15,11 @@
     <string name="email">Email</string>
     <string name="descripcion">Descripción</string>
     <string name="agregar_ejercicio">Agregar Ejercicio</string>
+    <string name="sentadillas">Sentadillas</string>
+    <string name="fortalecer_piernas">Fortalecer las Piernas</string>
+    <string name="maquina">Máquina</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="editar">Editar</string>
 
 
 </resources>
