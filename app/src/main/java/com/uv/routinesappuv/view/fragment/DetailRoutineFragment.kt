@@ -55,7 +55,6 @@ class DetailRoutineFragment : Fragment() {
                 R.id.action_fragment_detail_routine_to_fragment_edit_routine,
                 bundle
             )
-           // observadorViewModel();
         }
     }
 
