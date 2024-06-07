@@ -19,6 +19,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.uv.routinesappuv.viewmodel.RoutinesViewModel
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
@@ -63,7 +66,7 @@ class AddExerciseFragment : Fragment() {
         "Cojines de equilibrio (bosu)",
         "Sin equipamento"
     )
-
+    private val rutinasViewModel: RoutinesViewModel by viewModels()
     private val seriesList = (1..10).map { it.toString() }
     private val repeticionesList = (1..10).map { it.toString() }
     private var exercises = mutableListOf<Ejercicio>()
@@ -220,6 +223,23 @@ class AddExerciseFragment : Fragment() {
             )
 
             exercises.add(ejercicio)
+            val updatedRutina = receivedRutina.copy(
+                nombre_rutina = receivedRutina.nombre_rutina,
+                descripcion_rutina = receivedRutina.descripcion_rutina,
+                ejercicios = exercises
+            )
+
+            rutinasViewModel.updateRutina(updatedRutina)
+//            findNavController().navigate(
+//              //  R.id.action_editExerciseFragment_to_editRoutineFragment
+//            )
+            val bundle = Bundle().apply {
+                putSerializable("clave", updatedRutina)
+            }
+            findNavController().navigate(
+                R.id.action_editExerciseFragment_to_editRoutineFragment,
+                bundle
+            )
 
             Log.d("rutinas viejas", "jaj ${receivedRutina.ejercicios}")
             Log.d("rutinas nuevas", "jaj ${exercises}")
