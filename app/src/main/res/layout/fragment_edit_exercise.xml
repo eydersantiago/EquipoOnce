@@ -98,7 +98,7 @@
             android:id="@+id/button"
             android:layout_width="160dp"
             android:layout_height="60dp"
-            android:text="Agregar Ejercicio"
+            android:text="@string/agregar_ejercicio"
             android:backgroundTint="#000000"
             app:cornerRadius="8dp"
             app:strokeWidth="2dp"

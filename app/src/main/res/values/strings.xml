@@ -12,6 +12,8 @@
     <string name="login">Ingresar</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
+    <string name="descripcion">Descripción</string>
+    <string name="agregar_ejercicio">Agregar Ejercicio</string>
 
 
 </resources>
