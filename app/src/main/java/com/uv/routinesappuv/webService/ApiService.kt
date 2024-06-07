@@ -15,6 +15,12 @@ interface ApiService {
      fun getImagenPerro(@Path("breed") breed: String): Call<ImageResponse>*/
     @GET("exercises")
     fun getExercises(@Query("limit") limit: Int): Call<List<RoutinesResponse>>
+    @GET("exercises/name/{exerciseName}")
+    fun getExerciseByName(
+        @Path("exerciseName") exerciseName: String,
+        @Query("offset") offset: Int = 0,
+        @Query("limit") limit: Int = 0
+    ): Call<List<RoutinesResponse>>
 }
 
 data class ImageResponse(

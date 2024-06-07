@@ -24,7 +24,12 @@ import retrofit2.Response
 import com.uv.routinesappuv.repository.RutinasRepository
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.concurrent.Callable
+import java.util.concurrent.Executors
+import java.util.concurrent.Future
 
 
 class AddRoutineFragment : Fragment() {
@@ -191,14 +196,45 @@ class AddRoutineFragment : Fragment() {
         binding.btnAgregarEjercicio.isEnabled = isDescripcionFilled && isSeriesFilled && isRepeticionesFilled
         binding.btnAgregarRutina.isEnabled = isNombreRutinaFilled && isDescripcionRutinaFilled
     }
+    private fun getExerciseGifUrl(exerciseName: String): String? {
+        val executor = Executors.newSingleThreadExecutor()
+        val future: Future<String?> = executor.submit(Callable {
+            try {
+                val apiService = ApiUtils.getApiService()
+                val response = apiService.getExerciseByName(exerciseName).execute()
+                if (response.isSuccessful) {
+                    val exercises = response.body()
+                    if (!exercises.isNullOrEmpty()) {
+                        exercises[0].gifUrl // Asumiendo que siempre hay al menos un resultado
+                    } else {
+                        null
+                    }
+                } else {
+                    null
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
+        })
 
+        return try {
+            future.get()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        } finally {
+            executor.shutdown()
+        }
+    }
     private fun saveExercise(binding: FragmentAddRoutineBinding) {
         val nombreEjercicio = binding.inputNombreEjercicio.selectedItem.toString()
         val descripcion = binding.etDescripcion.text.toString()
         val equipamiento = binding.inputEquipamiento.selectedItem.toString()
         val series = binding.etSeries.text.toString().toIntOrNull() ?: 0 // Convertir a Int o usar 0 si es nulo
         val repeticiones = binding.etRepeticiones.text.toString().toIntOrNull() ?: 0 // Convertir a Int o usar 0 si es nulo
-
+        val img = getExerciseGifUrl(nombreEjercicio)
+        Log.d("img", "img $img")
         if (nombreEjercicio.isNotEmpty() && descripcion.isNotEmpty() && equipamiento.isNotEmpty()) {
             val ejercicio = Ejercicio(
                 id = countEjercicios++,
@@ -207,7 +243,7 @@ class AddRoutineFragment : Fragment() {
                 equipamento = equipamiento,
                 series = series,
                 repeticiones = repeticiones,
-                img = ""
+                img = img.toString()
             )
 
 
