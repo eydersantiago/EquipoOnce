@@ -1,39 +1,49 @@
 package com.uv.routinesappuv.view.fragment
 
 import android.os.Bundle
+import android.telecom.Call
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.fragment.app.Fragment
-import com.uv.routinesappuv.R
-import com.uv.routinesappuv.databinding.FragmentAddRoutineBinding
-import com.uv.routinesappuv.databinding.FragmentEditRoutineBinding
-import com.uv.routinesappuv.model.Ejercicio
-import com.uv.routinesappuv.model.Rutina
-import com.uv.routinesappuv.webService.ApiService
-import com.uv.routinesappuv.webService.ApiUtils
-import com.uv.routinesappuv.webService.RoutinesResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.Button
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.uv.routinesappuv.R
+import com.uv.routinesappuv.databinding.FragmentAddRoutineBinding
+import com.uv.routinesappuv.databinding.FragmentEditExerciseBinding
+import com.uv.routinesappuv.databinding.FragmentEditRoutineBinding
+import com.uv.routinesappuv.model.Ejercicio
+import com.uv.routinesappuv.model.Rutina
 import com.uv.routinesappuv.viewmodel.RoutinesViewModel
+import com.uv.routinesappuv.webService.ApiService
+import com.uv.routinesappuv.webService.ApiUtils
+import com.uv.routinesappuv.webService.RoutinesResponse
+import retrofit2.Response
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
+import javax.security.auth.callback.Callback
 
-class AddExerciseFragment : Fragment() {
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-    private lateinit var spinner: Spinner
-    private lateinit var equipamento: Spinner
-    private lateinit var series: Spinner
-    private lateinit var repeticiones: Spinner
-    private lateinit var descripcion: AutoCompleteTextView
-    private lateinit var btnAgregar: Button
+
+/**
+ * A simple [Fragment] subclass.
+ * Use the [EditExerciseFragment.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class EditExerciseFragment : Fragment() {
+    // TODO: Rename and change types of parameters
+
+    private lateinit var binding: FragmentEditExerciseBinding
+
     private lateinit var apiService: ApiService
     private lateinit var receivedRutina: Rutina
     private val equipamentoList = listOf(
@@ -70,22 +80,24 @@ class AddExerciseFragment : Fragment() {
     private val seriesList = (1..10).map { it.toString() }
     private val repeticionesList = (1..10).map { it.toString() }
     private var exercises = mutableListOf<Ejercicio>()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_edit_exercise, container, false)
-
-        // Initialize ApiService
+        binding = FragmentEditExerciseBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        // Inflate the layout for this fragment
         apiService = ApiUtils.getApiService()
 
         // Initialize Views
-        spinner = view.findViewById(R.id.spinner)
-        equipamento = view.findViewById(R.id.Equipamento)
-        series = view.findViewById(R.id.series)
-        repeticiones = view.findViewById(R.id.repeticiones)
-        descripcion = view.findViewById(R.id.autoCompleteTextView)
-        btnAgregar = view.findViewById(R.id.button)
+
 
         receivedRutina = arguments?.getSerializable("rutina") as Rutina
         exercises = receivedRutina.ejercicios.toMutableList()
@@ -94,12 +106,11 @@ class AddExerciseFragment : Fragment() {
         fetchExercises()
 
         // Setup static spinners
-        setupSpinner(equipamento, equipamentoList)
-        setupSpinner(series, seriesList)
-        setupSpinner(repeticiones, repeticionesList)
+        setupSpinner()
+
 
         // Configure button click listener
-        btnAgregar.setOnClickListener {
+        binding.btnAgregar.setOnClickListener {
             if (isFormValid()) {
                 // Handle adding the exercise
                 addExercise()
@@ -107,62 +118,101 @@ class AddExerciseFragment : Fragment() {
                 Toast.makeText(requireContext(), "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show()
             }
         }
-
-        return view
+        return binding.root
     }
-
+    private val routinesList = mutableListOf<String>()
     private fun fetchExercises() {
-        apiService.getExercises(0).enqueue(object : Callback<List<RoutinesResponse>> {
+        apiService.getExercises(0).enqueue(object : retrofit2.Callback<List<RoutinesResponse>> {
             override fun onResponse(
-                call: Call<List<RoutinesResponse>>,
+                call: retrofit2.Call<List<RoutinesResponse>>,
                 response: Response<List<RoutinesResponse>>
             ) {
                 if (response.isSuccessful) {
                     val routinesList = response.body()
-                    val exerciseNames = mutableListOf<String>()
-
                     if (routinesList != null) {
-                        // Add exercises to the list
-                        exerciseNames.add("Selecciona un ejercicio") // Default option
+                        // Clear the list and add the default option
+                        this@EditExerciseFragment.routinesList.clear()
+                        this@EditExerciseFragment.routinesList.add("Nombre ejercicio")
 
+                        // Add exercise names from the response
                         for (routine in routinesList) {
-                            exerciseNames.add(routine.name)
+                            Log.d("Routine", "Name: ${routine.name}, Body Part: ${routine.bodyPart}")
+                            this@EditExerciseFragment.routinesList.add(routine.name)
+
                         }
 
-                        // Configure adapter for the Spinner
-                        val adapter = ArrayAdapter(
-                            requireContext(),
-                            android.R.layout.simple_spinner_item,
-                            exerciseNames
-                        )
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        spinner.adapter = adapter
+                        // Update the spinner with the new data
+                        setupSpinner()
+                    } else {
+                        Log.e("fetchExercises", "Response body is null")
                     }
+                } else {
+                    Log.e("fetchExercises", "Failed to fetch exercises. Response code: ${response.code()}")
                 }
             }
 
-            override fun onFailure(call: Call<List<RoutinesResponse>>, t: Throwable) {
-                // Handle error
+            override fun onFailure(call: retrofit2.Call<List<RoutinesResponse>>, t: Throwable) {
+                Log.e("fetchExercises", "Error fetching exercises", t)
+                Toast.makeText(requireContext(), "Error fetching exercises", Toast.LENGTH_SHORT).show()
             }
         })
     }
 
-    private fun setupSpinner(spinner: Spinner, items: List<String>) {
-        val adapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_item,
-            items
+    private fun setupSpinner() {
+        val exercisesAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, routinesList)
+        exercisesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinner.adapter = exercisesAdapter
+        val equipment = arrayOf(
+            "Equipamento",
+            "Cinta de correr (treadmill)",
+            "Bicicleta estática",
+            "Elíptica",
+            "Máquina de remo",
+            "Stepper o escaladora",
+            "Cuerda para saltar",
+            "Máquina de esquí de fondo (ski erg)",
+            "Pesas libres (mancuernas y barras)",
+            "Kettlebells",
+            "Barras de dominadas",
+            "Bandas de resistencia",
+            "Máquinas de pesas (multi-gimnasio)",
+            "Bancos de pesas ajustables",
+            "Balones medicinales",
+            "Sacos de arena (sandbags)",
+            "Barras para pesas olímpicas y discos",
+            "Cajas pliométricas",
+            "TRX o sistemas de entrenamiento en suspensión",
+            "Rueda abdominal",
+            "Cuerdas de batalla (battle ropes)",
+            "Balón suizo (fitball)",
+            "Esterilla de yoga o colchoneta",
+            "Rodillos de espuma (foam rollers)",
+            "Barras de estiramiento",
+            "Bloques y correas de yoga",
+            "Cojines de equilibrio (bosu)",
+            "Sin equipamento"
         )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
-    }
 
+        // Configurar adaptador para el Spinner de equipamiento
+        val equipmentAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, equipment)
+        equipmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.inputEquipamiento.adapter = equipmentAdapter
+
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.contentToolbarEdit.toolbarEdit.setNavigationOnClickListener { onBackPressed() }
+    }
+    private fun onBackPressed() {
+        findNavController().navigateUp()
+    }
     private fun isFormValid(): Boolean {
-        return spinner.selectedItemPosition != 0 &&
-                equipamento.selectedItemPosition != 0 &&
-                series.selectedItemPosition != 0 &&
-                repeticiones.selectedItemPosition != 0 &&
-                descripcion.text.toString().isNotEmpty()
+        return binding.spinner.selectedItemPosition != 0 &&
+                binding.inputEquipamiento.selectedItemPosition != 0 &&
+                binding.etSeries.text.toString().isNotEmpty() &&
+                binding.etRepeticiones.text.toString().isNotEmpty() &&
+                binding.etDescripcion.text.toString().isNotEmpty()
     }
     private fun generaNuevoId(): Int {
         // Aquí puedes implementar la lógica para generar un nuevo ID único para el ejercicio
@@ -205,11 +255,11 @@ class AddExerciseFragment : Fragment() {
     private val ejercicios = mutableListOf<Ejercicio>()
 
     private fun addExercise() {
-        val nombreEjercicio = spinner.selectedItem.toString()
-        val descripcion = descripcion.text.toString()
-        val equipamiento = equipamento.selectedItem.toString()
-        val series = series.selectedItem.toString().toIntOrNull() ?: 0
-        val repeticiones = repeticiones.selectedItem.toString().toIntOrNull() ?: 0
+        val nombreEjercicio = binding.spinner.selectedItem.toString()
+        val descripcion = binding.etDescripcion.text.toString()
+        val equipamiento = binding.inputEquipamiento.selectedItem.toString()
+        val series = binding.etSeries.text.toString().toIntOrNull() ?: 0
+        val repeticiones = binding.etRepeticiones.text.toString().toIntOrNull() ?: 0
         val img = getExerciseGifUrl(nombreEjercicio)
         if (nombreEjercicio.isNotEmpty() && descripcion.isNotEmpty() && equipamiento.isNotEmpty()) {
             val ejercicio = Ejercicio(
@@ -249,3 +299,5 @@ class AddExerciseFragment : Fragment() {
         }
     }
 }
+
+
