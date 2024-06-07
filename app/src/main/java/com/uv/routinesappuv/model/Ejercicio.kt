@@ -6,5 +6,6 @@ data class Ejercicio (
     val descripcion_ejercicio: String,
     val equipamento: String,
     val series: Int,
-    val repeticiones: Int
+    val repeticiones: Int,
+    var img: String
 )

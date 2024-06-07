@@ -39,6 +39,14 @@ class EditRoutineFragment : Fragment() {
         binding.btnEdit.setOnClickListener {
             editRutina()
         }
+        binding.btnNuevoEjercicio.setOnClickListener{
+            val bundle = Bundle()
+            bundle.putSerializable("rutina", receivedRutina) // Pasar toda la rutina
+            findNavController().navigate(
+                R.id.action_fragment_edit_routine_to_fragment_edit_exercise,
+                bundle
+            )
+        }
     }
 
     private fun dataRutina() {

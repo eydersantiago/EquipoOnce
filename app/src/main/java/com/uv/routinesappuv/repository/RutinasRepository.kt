@@ -33,8 +33,9 @@ class RutinasRepository(val context: Context) {
                     val equipamento = ejercicioMap["equipamento"] as? String ?: ""
                     val series = (ejercicioMap["series"] as? Long)?.toInt() ?: 0
                     val repeticiones = (ejercicioMap["repeticiones"] as? Long)?.toInt() ?: 0
+                    val img = ejercicioMap["img"] as? String ?: ""
 
-                    val ejercicio = Ejercicio(ejercicioId, ejercicioNombre, ejercicioDescripcion, equipamento, series, repeticiones)
+                    val ejercicio = Ejercicio(ejercicioId, ejercicioNombre, ejercicioDescripcion, equipamento, series, repeticiones, img)
                     ejercicios.add(ejercicio)
                 }
 

@@ -24,7 +24,13 @@ import retrofit2.Response
 import com.uv.routinesappuv.repository.RutinasRepository
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.concurrent.Callable
+import java.util.concurrent.Executors
+import java.util.concurrent.Future
+
 
 
 class AddRoutineFragment : Fragment() {
@@ -32,6 +38,7 @@ class AddRoutineFragment : Fragment() {
     private lateinit var rutinasRepository: RutinasRepository
     private lateinit var apiService: ApiService
     private val routinesList = mutableListOf<String>()
+    private val imgList = mutableListOf<String>()
     private val exerciseList = mutableListOf<Ejercicio>()
     private var countEjercicios = 0
 
@@ -55,7 +62,7 @@ class AddRoutineFragment : Fragment() {
     }
 
     private fun fetchExercises() {
-        apiService.getExercises().enqueue(object : Callback<List<RoutinesResponse>> {
+        apiService.getExercises(0).enqueue(object : Callback<List<RoutinesResponse>> {
             override fun onResponse(
                 call: Call<List<RoutinesResponse>>,
                 response: Response<List<RoutinesResponse>>
@@ -71,6 +78,7 @@ class AddRoutineFragment : Fragment() {
                         for (routine in routinesList) {
                             Log.d("Routine", "Name: ${routine.name}, Body Part: ${routine.bodyPart}")
                             this@AddRoutineFragment.routinesList.add(routine.name)
+                            this@AddRoutineFragment.imgList.add(routine.gifUrl)
                         }
 
                         // Update the spinner with the new data
@@ -189,14 +197,45 @@ class AddRoutineFragment : Fragment() {
         binding.btnAgregarEjercicio.isEnabled = isDescripcionFilled && isSeriesFilled && isRepeticionesFilled
         binding.btnAgregarRutina.isEnabled = isNombreRutinaFilled && isDescripcionRutinaFilled
     }
+    private fun getExerciseGifUrl(exerciseName: String): String? {
+        val executor = Executors.newSingleThreadExecutor()
+        val future: Future<String?> = executor.submit(Callable {
+            try {
+                val apiService = ApiUtils.getApiService()
+                val response = apiService.getExerciseByName(exerciseName).execute()
+                if (response.isSuccessful) {
+                    val exercises = response.body()
+                    if (!exercises.isNullOrEmpty()) {
+                        exercises[0].gifUrl // Asumiendo que siempre hay al menos un resultado
+                    } else {
+                        null
+                    }
+                } else {
+                    null
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
+        })
 
+        return try {
+            future.get()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        } finally {
+            executor.shutdown()
+        }
+    }
     private fun saveExercise(binding: FragmentAddRoutineBinding) {
         val nombreEjercicio = binding.inputNombreEjercicio.selectedItem.toString()
         val descripcion = binding.etDescripcion.text.toString()
         val equipamiento = binding.inputEquipamiento.selectedItem.toString()
         val series = binding.etSeries.text.toString().toIntOrNull() ?: 0 // Convertir a Int o usar 0 si es nulo
         val repeticiones = binding.etRepeticiones.text.toString().toIntOrNull() ?: 0 // Convertir a Int o usar 0 si es nulo
-
+        val img = getExerciseGifUrl(nombreEjercicio)
+        Log.d("img", "img $img")
         if (nombreEjercicio.isNotEmpty() && descripcion.isNotEmpty() && equipamiento.isNotEmpty()) {
             val ejercicio = Ejercicio(
                 id = countEjercicios++,
@@ -204,8 +243,11 @@ class AddRoutineFragment : Fragment() {
                 descripcion_ejercicio = descripcion,
                 equipamento = equipamiento,
                 series = series,
-                repeticiones = repeticiones
+                repeticiones = repeticiones,
+                img = img.toString()
             )
+
+
 
             // Agrega el ejercicio al array o haz con él lo que necesites
             exerciseList.add(ejercicio)

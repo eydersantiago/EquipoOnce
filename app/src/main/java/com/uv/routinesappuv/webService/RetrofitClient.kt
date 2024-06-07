@@ -5,8 +5,8 @@ import okhttp3.Request
 import com.uv.routinesappuv.utils.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import com.uv.routinesappuv.utils.Constants.BASE_URL
 import okhttp3.OkHttpClient
+
 object RetrofitClient {
 
     private val client: OkHttpClient by lazy {
@@ -14,8 +14,10 @@ object RetrofitClient {
             .addInterceptor { chain ->
                 val original: Request = chain.request()
                 val requestBuilder: Request.Builder = original.newBuilder()
+                    .header("limit", "0") // Cambia el límite a 0
                     .header("X-RapidAPI-Key", Constants.API_KEY)
                     .header("X-RapidAPI-Host", Constants.API_HOST)
+
                 val request: Request = requestBuilder.build()
                 chain.proceed(request)
             }
