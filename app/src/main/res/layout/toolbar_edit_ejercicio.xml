@@ -1,0 +1,32 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.Toolbar
+
+        android:id="@+id/toolbar_edit"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/curved_top_left_corner"
+        android:paddingStart="50dp"
+        android:paddingTop="3dp"
+        android:layout_marginTop="0dp"
+        app:navigationIcon="@drawable/back_36"
+        app:buttonGravity="center_vertical">
+
+        <!-- Title centered -->
+        <TextView
+            android:id="@+id/titleTextViewEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="25dp"
+            android:gravity="center"
+            android:text="Editar Ejercicio"
+            android:textColor="@android:color/white"
+            android:textSize="30sp" /> <!-- Adjusted margin top -->
+
+    </androidx.appcompat.widget.Toolbar>
+
+</layout>

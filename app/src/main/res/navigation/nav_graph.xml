@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/fragment_login">
+
     <fragment
-    android:id="@+id/fragment_login"
-    android:name="com.uv.routinesappuv.view.fragment.LoginRoutineFragment"
-    android:label="fragment_login"
-    tools:layout="@layout/fragment_login_routine">
-    <action
-        android:id="@+id/action_logged_in"
-        app:destination="@id/fragment_home_routine" />
+        android:id="@+id/fragment_login"
+        android:name="com.uv.routinesappuv.view.fragment.LoginRoutineFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login_routine">
+        <action
+            android:id="@+id/action_logged_in"
+            app:destination="@id/fragment_home_routine" />
     </fragment>
+
     <fragment
         android:id="@+id/fragment_home_routine"
         android:name="com.uv.routinesappuv.view.fragment.HomeRoutineFragment"
@@ -22,9 +24,13 @@
             android:id="@+id/action_add_routine"
             app:destination="@id/fragment_add_routine" />
         <action
-            android:id="@+id/action_fragment_home_routine_to_fragment_detail_routine"
+            android:id="@+id/action_see_routine"
             app:destination="@id/fragment_detail_routine" />
+        <action
+            android:id="@+id/action_fragment_home_logOut"
+            app:destination="@id/fragment_login" />
     </fragment>
+
     <fragment
         android:id="@+id/fragment_add_routine"
         android:name="com.uv.routinesappuv.view.fragment.AddRoutineFragment"
@@ -33,7 +39,12 @@
         <action
             android:id="@+id/action_go_back_home"
             app:destination="@id/fragment_home_routine" />
+        <action
+            android:id="@+id/action_to_edit_exercise"
+            app:destination="@id/fragment_edit_exercise" />
     </fragment>
+
+
     <fragment
         android:id="@+id/fragment_detail_routine"
         android:name="com.uv.routinesappuv.view.fragment.DetailRoutineFragment"
@@ -46,6 +57,7 @@
             android:id="@+id/action_fragment_detail_routine_to_fragment_edit_routine"
             app:destination="@id/fragment_edit_routine" />
     </fragment>
+
     <fragment
         android:id="@+id/fragment_edit_routine"
         android:name="com.uv.routinesappuv.view.fragment.EditRoutineFragment"
@@ -58,4 +70,17 @@
             android:id="@+id/action_fragment_edit_routine_to_fragment_detail_routine"
             app:destination="@id/fragment_detail_routine" />
     </fragment>
+
+    <fragment
+        android:id="@+id/fragment_edit_exercise"
+        android:name="com.uv.routinesappuv.view.fragment.EditExerciseFragment"
+        android:label="fragment_edit_exercise"
+        tools:layout="@layout/fragment_edit_exercise">
+
+        <action
+            android:id="@+id/action_editExerciseFragment_to_editRoutineFragment"
+            app:destination="@id/fragment_edit_routine" />
+    </fragment>
+            
+
 </navigation>

@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.uv.routinesappuv.databinding.FragmentHomeRoutineBinding
 import com.uv.routinesappuv.viewmodel.RoutinesViewModel
 import com.uv.routinesappuv.R
@@ -20,7 +21,7 @@ import com.uv.routinesappuv.view.adapter.RoutinesAdapter
 class HomeRoutineFragment : Fragment() {
     private lateinit var binding: FragmentHomeRoutineBinding
     private val routinesViewModel: RoutinesViewModel by viewModels()
-
+    private lateinit var auth: FirebaseAuth
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,7 +40,8 @@ class HomeRoutineFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         controladores();
         observadorViewModel();
-
+        capturarData()
+        getEmail()
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
@@ -54,14 +56,37 @@ class HomeRoutineFragment : Fragment() {
         binding.btnFragmentNuevaCita.setOnClickListener {
             findNavController().navigate(R.id.fragment_add_routine)
         }
+        binding.btnLogOut.setOnClickListener{
+            logout()
+        }
+        //temporal mientras se hace lo de detalle rutina para poder ver los fragments
+    }
+    private fun logout() {
+        val auth = FirebaseAuth.getInstance()
+        auth.signOut()
+        // Navigate to the login fragment
+        findNavController().navigate(R.id.action_fragment_home_logOut)
+        Log.d("Logout", "User logged out successfully.")
+    }
+
+    private fun capturarData(){
+        val email = arguments?.getString("email")
+
     }
     private fun observadorViewModel() {
         observerListRutinas()
 
     }
 
+    private fun getEmail(): String? {
+        val auth = FirebaseAuth.getInstance()
+        val user = auth.currentUser
+        return user?.email
+    }
     private fun observerListRutinas() {
-        routinesViewModel.fetchRutinas()
+        val email = getEmail()
+
+        routinesViewModel.fetchRutinas(email.toString())
         routinesViewModel.rutinas.observe(viewLifecycleOwner) { listRutinas ->
             val recycler = binding.recyclerview
             val layoutManager = LinearLayoutManager(context)
