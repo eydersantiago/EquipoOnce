@@ -39,6 +39,11 @@ class EditRoutineFragment : Fragment() {
         binding.btnEdit.setOnClickListener {
             editRutina()
         }
+        binding.btnNuevoEjercicio.setOnClickListener{
+            findNavController().navigate(
+                R.id.action_fragment_edit_routine_to_fragment_edit_exercise
+            )
+        }
     }
 
     private fun dataRutina() {

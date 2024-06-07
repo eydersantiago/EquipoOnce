@@ -51,7 +51,7 @@ class AddExerciseFragment : Fragment() {
         fetchExercises()
 
         // Configure Toolbar
-        setupToolbar(view)
+        //setupToolbar(view)
 
         // Configure button click listener
         btnAgregar.setOnClickListener {
@@ -97,12 +97,12 @@ class AddExerciseFragment : Fragment() {
         })
     }
 
-    private fun setupToolbar(view: View) {
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbar_edit)
-        (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
-        toolbar.setNavigationOnClickListener {
-            // Navigate back to the previous fragment
-            findNavController().navigateUp()
-        }
-    }
+//    private fun setupToolbar(view: View) {
+//        val toolbar = view.findViewById<Toolbar>(R.id.toolbar_edit)
+//        (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
+//        toolbar.setNavigationOnClickListener {
+//            // Navigate back to the previous fragment
+//            findNavController().navigateUp()
+//        }
+//    }
 }
