@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.uv.routinesappuv.databinding.FragmentDetailRoutineBinding
 import com.uv.routinesappuv.model.Rutina
 import com.uv.routinesappuv.view.adapter.ExercisesAdapter
@@ -39,12 +40,13 @@ class DetailRoutineFragment : Fragment() {
 
     private fun dataRutina() {
         val receivedBundle = arguments
-
+        val image = receivedBundle?.getSerializable("imagen")
         receivedRutina = receivedBundle?.getSerializable("clave") as Rutina
         val recycler = binding.recyclerview
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.adapter = ExercisesAdapter(receivedRutina.ejercicios)
 
         binding.titleDescripcion.text = receivedRutina.descripcion_rutina
+
     }
 }

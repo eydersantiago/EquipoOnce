@@ -32,6 +32,7 @@ class AddRoutineFragment : Fragment() {
     private lateinit var rutinasRepository: RutinasRepository
     private lateinit var apiService: ApiService
     private val routinesList = mutableListOf<String>()
+    private val imgList = mutableListOf<String>()
     private val exerciseList = mutableListOf<Ejercicio>()
     private var countEjercicios = 0
 
@@ -71,6 +72,7 @@ class AddRoutineFragment : Fragment() {
                         for (routine in routinesList) {
                             Log.d("Routine", "Name: ${routine.name}, Body Part: ${routine.bodyPart}")
                             this@AddRoutineFragment.routinesList.add(routine.name)
+                            this@AddRoutineFragment.imgList.add(routine.gifUrl)
                         }
 
                         // Update the spinner with the new data
@@ -207,6 +209,8 @@ class AddRoutineFragment : Fragment() {
                 repeticiones = repeticiones,
                 img = ""
             )
+
+
 
             // Agrega el ejercicio al array o haz con él lo que necesites
             exerciseList.add(ejercicio)
