@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "53115576143",
+    "project_id": "equipoonce-770f0",
+    "storage_bucket": "equipoonce-770f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53115576143:android:92650a06d4b4abc0f2ef3a",
+        "android_client_info": {
+          "package_name": "com.uv.routinesappuv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "53115576143-9ic271j08t6tnrch5kqtqij60sc1uveb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAAgBQzYG4yod4UuSUOMQ7E3VjUiGfAJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "53115576143-9ic271j08t6tnrch5kqtqij60sc1uveb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
