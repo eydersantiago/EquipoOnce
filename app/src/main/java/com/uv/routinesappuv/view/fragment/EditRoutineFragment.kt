@@ -1,10 +1,13 @@
 package com.uv.routinesappuv.view.fragment
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +28,7 @@ class EditRoutineFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEditRoutineBinding.inflate(inflater, container, false)
+        setupListeners()
         return binding.root
     }
 
@@ -36,9 +40,7 @@ class EditRoutineFragment : Fragment() {
     }
 
     private fun controladores() {
-        binding.btnEdit.setOnClickListener {
-            editRutina()
-        }
+
         binding.btnNuevoEjercicio.setOnClickListener{
             val bundle = Bundle()
             bundle.putSerializable("rutina", receivedRutina) // Pasar toda la rutina
@@ -78,5 +80,44 @@ class EditRoutineFragment : Fragment() {
         )
     }
 
+    private fun setupListeners() {
+        val textWatchers = listOf(
+            binding.etDescripcion,
+            binding.etNombreRutina
+        )
 
+        for (textView in textWatchers) {
+            textView.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    validateFields()
+                }
+                override fun afterTextChanged(s: Editable?) {}
+            })
+        }
+
+        binding.btnEdit.setOnClickListener {
+            if (binding.etNombreRutina.text.toString().isEmpty() ||
+                binding.etDescripcion.text.toString().isEmpty()) {
+
+                //binding.btnEdit.setBackgroundColor(resources.getColor(R.color.gray))
+            } else {
+                editRutina()
+            }
+        }
+    }
+
+    private fun validateFields() {
+        val isDescripcionFilled = binding.etDescripcion.text.toString().isNotEmpty()
+        val isNombreRutinaFilled = binding.etNombreRutina.text.toString().isNotEmpty()
+
+        binding.btnEdit.isEnabled = isDescripcionFilled && isNombreRutinaFilled
+
+        if (binding.btnEdit.isEnabled) {
+            binding.btnEdit.setBackgroundColor(resources.getColor(R.color.enabled_button_color))
+        } else {
+            binding.btnEdit.setBackgroundColor(resources.getColor(R.color.disabled_button_color))
+            Toast.makeText(requireContext(), "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
+        }
+    }
 }
