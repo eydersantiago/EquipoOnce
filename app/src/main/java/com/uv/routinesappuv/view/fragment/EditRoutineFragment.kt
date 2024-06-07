@@ -47,8 +47,8 @@ class EditRoutineFragment : Fragment() {
 
     fun recycler(){
         var listExercises = mutableListOf(
-            Ejercicio(1, "abdominales", "fortalecer_abdomen", "mancuernas",2, 3),
-            Ejercicio(2, "sentadillas", "fortalecer_piernas", "máquina",4, 5)
+            Ejercicio(1, "abdominales", "fortalecer_abdomen", "mancuernas",2, 3, ""),
+            Ejercicio(2, "sentadillas", "fortalecer_piernas", "máquina",4, 5, "")
         )
 
         val recycler = binding.recyclerview

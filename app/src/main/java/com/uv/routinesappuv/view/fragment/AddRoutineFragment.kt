@@ -55,7 +55,7 @@ class AddRoutineFragment : Fragment() {
     }
 
     private fun fetchExercises() {
-        apiService.getExercises().enqueue(object : Callback<List<RoutinesResponse>> {
+        apiService.getExercises(0).enqueue(object : Callback<List<RoutinesResponse>> {
             override fun onResponse(
                 call: Call<List<RoutinesResponse>>,
                 response: Response<List<RoutinesResponse>>
@@ -204,7 +204,8 @@ class AddRoutineFragment : Fragment() {
                 descripcion_ejercicio = descripcion,
                 equipamento = equipamiento,
                 series = series,
-                repeticiones = repeticiones
+                repeticiones = repeticiones,
+                img = ""
             )
 
             // Agrega el ejercicio al array o haz con él lo que necesites
