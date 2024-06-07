@@ -56,6 +56,9 @@
         <action
             android:id="@+id/action_fragment_detail_routine_to_fragment_edit_routine"
             app:destination="@id/fragment_edit_routine" />
+        <action
+            android:id="@+id/action_see_routine"
+            app:destination="@id/fragment_detail_routine" />
     </fragment>
 
     <fragment

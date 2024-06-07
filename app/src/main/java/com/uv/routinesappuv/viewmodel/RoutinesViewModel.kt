@@ -52,7 +52,7 @@ class RoutinesViewModel(application: Application) : AndroidViewModel(application
         viewModelScope.launch {
             try {
                 repository.updateRoutine(rutina)
-                //fetchRutinas(rutina.userEmail) // Refresh the list of routines after updating
+                fetchRutinas(rutina.user_mail) // Refresh the list of routines after updating
             } catch (e: CancellationException) {
                 // Handle job cancellation specifically
                 Log.w("RoutinesViewModel", "Job was cancelled: ${e.message}")

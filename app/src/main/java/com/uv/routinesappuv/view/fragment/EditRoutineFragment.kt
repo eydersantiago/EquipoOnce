@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.uv.routinesappuv.R
 import com.uv.routinesappuv.databinding.FragmentEditRoutineBinding
 import com.uv.routinesappuv.model.Rutina
 import com.uv.routinesappuv.view.adapter.ExercisesAdapter
@@ -24,20 +23,20 @@ class EditRoutineFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentEditRoutineBinding.inflate(inflater)
-        binding.lifecycleOwner = this
+        binding = FragmentEditRoutineBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.lifecycleOwner = viewLifecycleOwner
         dataRutina()
         controladores()
     }
 
     private fun controladores() {
         binding.btnEdit.setOnClickListener {
-            saveRutina()
+            editRutina()
         }
     }
 
@@ -53,7 +52,7 @@ class EditRoutineFragment : Fragment() {
         recycler.adapter = ExercisesAdapter(receivedRutina.ejercicios)
     }
 
-    private fun saveRutina() {
+    private fun editRutina() {
         val updatedRutina = receivedRutina.copy(
             nombre_rutina = binding.etNombreRutina.text.toString(),
             descripcion_rutina = binding.etDescripcion.text.toString()
