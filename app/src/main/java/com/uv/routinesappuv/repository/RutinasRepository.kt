@@ -33,8 +33,9 @@ class RutinasRepository(val context: Context) {
                     val equipamento = ejercicioMap["equipamento"] as? String ?: ""
                     val series = (ejercicioMap["series"] as? Long)?.toInt() ?: 0
                     val repeticiones = (ejercicioMap["repeticiones"] as? Long)?.toInt() ?: 0
+                    val img = ejercicioMap["img"] as? String ?: ""
 
-                    val ejercicio = Ejercicio(ejercicioId, ejercicioNombre, ejercicioDescripcion, equipamento, series, repeticiones)
+                    val ejercicio = Ejercicio(ejercicioId, ejercicioNombre, ejercicioDescripcion, equipamento, series, repeticiones, img)
                     ejercicios.add(ejercicio)
                 }
 
@@ -48,13 +49,31 @@ class RutinasRepository(val context: Context) {
         return rutinas
     }
 
-    // Método para guardar la rutina
+
     suspend fun saveRoutine(rutina: Rutina) {
         try {
             db.collection("rutina").add(rutina).await()
             Log.d("Firestore", "Rutina guardada exitosamente")
         } catch (exception: Exception) {
             Log.w("Firestore", "Error al guardar la rutina: ", exception)
+        }
+    }
+
+    suspend fun updateRoutine(rutina: Rutina) {
+        try {
+            db.collection("rutina").document(rutina.id).set(rutina).await()
+            Log.d("Firestore", "Rutina actualizada exitosamente")
+        } catch (exception: Exception) {
+            Log.w("Firestore", "Error al actualizar la rutina: ", exception)
+        }
+    }
+
+    suspend fun deleteRoutine(rutinaId: String) {
+        try {
+            db.collection("rutina").document(rutinaId).delete().await()
+            Log.d("Firestore", "Rutina eliminada exitosamente")
+        } catch (exception: Exception) {
+            Log.w("Firestore", "Error al eliminar la rutina: ", exception)
         }
     }
 
