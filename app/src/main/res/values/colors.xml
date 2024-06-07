@@ -6,5 +6,7 @@
     <color name="toolbar">#000000</color>
     <color name="white_with_transparency">#C0FFFFFF</color>
     <color name="colorButtonBackground">#000000</color>
+    <color name="enabled_button_color">#000000</color>
+    <color name="disabled_button_color">#5E5A5A</color>
 
 </resources>
