@@ -32,6 +32,7 @@ import java.util.concurrent.Executors
 import java.util.concurrent.Future
 
 
+
 class AddRoutineFragment : Fragment() {
     private lateinit var binding: FragmentAddRoutineBinding
     private lateinit var rutinasRepository: RutinasRepository
