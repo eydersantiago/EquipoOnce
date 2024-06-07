@@ -31,6 +31,7 @@ class RoutinesViewHolder(binding: ItemRutinaBinding, navController: NavControlle
         bindingItem.cvRutina.setOnClickListener {
             val bundle = Bundle()
             bundle.putSerializable("clave", rutina)
+            Log.d("rutina holder", "rutina $rutina")
             navController.navigate(
                 R.id.action_see_routine, bundle
             )

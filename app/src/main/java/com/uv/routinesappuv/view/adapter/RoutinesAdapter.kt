@@ -1,5 +1,6 @@
 package com.uv.routinesappuv.view.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.NavController
@@ -21,6 +22,7 @@ class RoutinesAdapter(private val listRutina: MutableList<Rutina>, private val n
 
     override fun onBindViewHolder(holder: RoutinesViewHolder, position: Int) {
         val rutina = listRutina[position]
+        Log.d("rutina", "rutina escogida $rutina")
         holder.setItemRutina(rutina)
     }
 }
